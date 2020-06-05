@@ -1,0 +1,13 @@
+name = "MCPSD"
+uuid = "d9274e38-92a3-47a3-bd44-9c2030409226"
+authors = ["Benoît Legat <benoit.legat@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+MathOptInterface = "b8f27783-ece8-5eb3-8dc8-9495eed66fee"
+Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+
+[compat]
+MathOptInterface = "0.9"
