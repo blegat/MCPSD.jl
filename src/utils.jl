@@ -1,5 +1,5 @@
 # Similar to `LinearAlgebra.isposdef`
-function is_add_mul_psd(X::Symmetric, α, dX::Symmetric)
+function is_add_mul_psd(X::Symmetric, α, dX::Union{Diagonal, Symmetric})
     # With `check = true`, it throws an error,
     # with `check = false`, it does not and we can check with `issuccess`.
     return issuccess(cholesky!(sym_plus(X, α * dX)::typeof(X), check = false))

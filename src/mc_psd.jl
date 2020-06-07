@@ -4,10 +4,10 @@ function print_current(iter, cholcnt, αp, αd, δ, ψ, ϕ, start, current)
     @printf(" %8.3f | %4.0d | %5.0d | %5.3f | %5.3f | %10.5f | %10.3f | %10.3f\n", time_sec, iter, cholcnt, αp, αd, log10(δ), ψ, ϕ)
 end
 
-function line_search(X::Symmetric{T}, dX::Symmetric{T}) where T
+function line_search(X::Symmetric{T}, ΔX::Union{Diagonal{T}, Symmetric{T}}) where T
     α = one(T)
     num_chol = 0
-    while !is_add_mul_psd(X, α, dX)
+    while !is_add_mul_psd(X, α, ΔX)
         num_chol += 1
         α *= 0.8
     end
@@ -78,15 +78,15 @@ function mc_psd(L::Symmetric{T};
         ΔX = Symmetric((ΔX + ΔX') / 2)       # (6.11)
 
         # find steplengths αp and αd
-        αp, _num_chol = line_search(X, dX)
+        αp, _num_chol = line_search(X, ΔX)
         cholcnt += _num_chol
-        αd, _num_chol = line_search(Z, dZ)
+        αd, _num_chol = line_search(Z, ΔZ)
         cholcnt += _num_chol
 
         # update
-        X = (X + αp * dX)::Symmetric{T, Matrix{T}}
-        y = y + αd * dy
-        Z = sym_plus(Z, αd * dZ)::typeof(L)
+        X = (X + αp * ΔX)::Symmetric{T, Matrix{T}}
+        y = y + αd * Δy
+        Z = sym_plus(Z, αd * ΔZ)::typeof(L)
         μ = (X ⋅ Z) / (2 * n)
         if min(αp, αd) < 0.5
             μ = μ * 1.5
