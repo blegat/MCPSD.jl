@@ -1,5 +1,9 @@
 # MCPSD
 
+| **Build Status** |
+|:----------------:|
+| [![Build Status][build-img]][build-url] [![Codecov branch][codecov-img]][codecov-url] |
+
 This is a translation of the [`mc_psd.m`](https://www.math.aau.at/or/Software/mc_psd.m) MATLAB function written by Franz Rendl.
 A preliminary version of this MATLAB function also appears in Section 7 of [HRVW96].
 
@@ -16,3 +20,8 @@ x = @variable(model, [1:10] in MCPSD.Elliptope(5))
 optimize!(model)
 value.(x)
 ```
+
+[build-img]: https://api.travis-ci.com/blegat/MCPSD.jl.svg?branch=master
+[build-url]: https://travis-ci.com/github/blegat/MCPSD.jl
+[codecov-img]: http://codecov.io/github/blegat/MCPSD.jl/coverage.svg?branch=master
+[codecov-url]: http://codecov.io/github/blegat/MCPSD.jl?branch=master
