@@ -69,6 +69,10 @@ function MOI.copy_to(dest::Optimizer, src::MOI.ModelLike; kwargs...)
     return MOI.Utilities.automatic_copy_to(dest, src; kwargs...)
 end
 
+function MOI.get(optimizer::Optimizer, ::MOI.ListOfOptimizerAttributesSet)
+    return collect(keys(optimizer.options))
+end
+
 function MOI.get(optimizer::Optimizer, ::MOI.ListOfModelAttributesSet)
     attributes = MOI.AbstractModelAttribute[]
     if optimizer.sense !== nothing

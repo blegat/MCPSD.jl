@@ -41,7 +41,6 @@ function moi_test(optimizer, L::Matrix{T}, expected_X, expected_y, expected_obj,
     S = MCPSD.Elliptope
     @test MOI.get(optimizer, MOI.NumberOfConstraints{F, S}()) == 0
     @test isempty(MOI.get(optimizer, MOI.ListOfConstraintIndices{F, S}()))
-    @test MOI.supports_add_constrained_variables(optimizer, MCPSD.Elliptope)
     x, cx = MOI.add_constrained_variables(optimizer, MCPSD.Elliptope(size(L, 1)))
     @test !MOI.is_empty(optimizer)
     @test cx == MOI.ConstraintIndex{F, S}(1)
@@ -78,8 +77,9 @@ end
 @testset "[MOI_wrapper] Wikipedia example with $T" for T in [Float64, BigFloat]
     optimizer = MCPSD.Optimizer{T}()
     moi_test(optimizer, wikipedia_example(T)...)
+    cached = MOIU.CachingOptimizer(MCPSD.Optimizer{T}(), MOIU.AUTOMATIC)
     MOI.empty!(optimizer)
-    cached = MOIU.CachingOptimizer(MCPSD.Optimizer{T}(), optimizer)
-    moi_test(optimizer, wikipedia_example(T)...)
+    MOIU.reset_optimizer(cached, optimizer)
+    moi_test(cached, wikipedia_example(T)...)
 end
 
