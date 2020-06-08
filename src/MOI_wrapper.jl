@@ -151,6 +151,7 @@ function MOI.set(optimizer::Optimizer{T}, ::MOI.ObjectiveFunction{MOI.ScalarAffi
                  func::MOI.ScalarAffineFunction{T}) where T
     optimizer.objective_function = func
 end
+MOI.get(optimizer::Optimizer{T}, ::MOI.ObjectiveFunctionType) where {T} = MOI.ScalarAffineFunction{T}
 function MOI.get(optimizer::Optimizer{T}, ::MOI.ObjectiveFunction{MOI.ScalarAffineFunction{T}}) where T
     return optimizer.objective_function
 end
