@@ -84,7 +84,7 @@ function mc_psd(L::Symmetric{T};
         cholcnt += _num_chol
 
         # update
-        X = (X + αp * ΔX)::Symmetric{T, Matrix{T}}
+        X = sym_plus(X, _prod(αp, ΔX))::Symmetric{T, Matrix{T}}
         y = y + αd * Δy
         Z = sym_plus(Z, αd * ΔZ)::typeof(L)
         μ = (X ⋅ Z) / (2 * n)
