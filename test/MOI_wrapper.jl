@@ -23,7 +23,6 @@ const BRIDGED = MOI.instantiate(OPTIMIZER_CONSTRUCTOR, with_bridge_type = Float6
 const CONFIG = MOIT.TestConfig(atol=1e-6, rtol=1e-6)
 
 function moi_test(optimizer, L::Matrix{T}, expected_X, expected_y, expected_obj, tol) where T
-    MOI.empty!(optimizer)
     @test MOI.is_empty(optimizer)
     @test MOI.get(optimizer, MOI.SolverName()) == "MCPSD"
     MOI.supports(optimizer, MCPSD.Digits())
@@ -82,4 +81,3 @@ end
     MOIU.reset_optimizer(cached, optimizer)
     moi_test(cached, wikipedia_example(T)...)
 end
-
