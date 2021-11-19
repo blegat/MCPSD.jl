@@ -131,8 +131,8 @@ end
 
 MOI.supports_incremental_interface(::Optimizer) = true
 
-function MOI.copy_to(dest::Optimizer, src::MOI.ModelLike; kwargs...)
-    return MOI.Utilities.automatic_copy_to(dest, src; kwargs...)
+function MOI.copy_to(dest::Optimizer, src::MOI.ModelLike)
+    return MOI.Utilities.default_copy_to(dest, src)
 end
 
 # Needed to copy from the optimizer

@@ -29,7 +29,7 @@ function moi_test(optimizer, L::Matrix{T}, expected_X, expected_y, expected_obj,
     MOI.set(optimizer, MOI.Silent(), true)
     @test MOI.get(optimizer, MOI.Silent())
     @test MOI.is_empty(optimizer)
-    @test isempty(MOI.get(optimizer, MOI.ListOfConstraints()))
+    @test isempty(MOI.get(optimizer, MOI.ListOfConstraintTypesPresent()))
     F = MOI.VectorOfVariables
     S = MCPSD.Elliptope
     @test MOI.get(optimizer, MOI.NumberOfConstraints{F, S}()) == 0
@@ -37,7 +37,7 @@ function moi_test(optimizer, L::Matrix{T}, expected_X, expected_y, expected_obj,
     x, cx = MOI.add_constrained_variables(optimizer, MCPSD.Elliptope(size(L, 1)))
     @test !MOI.is_empty(optimizer)
     @test cx == MOI.ConstraintIndex{F, S}(1)
-    @test MOI.get(optimizer, MOI.ListOfConstraints()) == [(F, S)]
+    @test MOI.get(optimizer, MOI.ListOfConstraintTypesPresent()) == [(F, S)]
     @test MOI.get(optimizer, MOI.NumberOfConstraints{F, S}()) == 1
     @test MOI.get(optimizer, MOI.ListOfConstraintIndices{F, S}()) == [cx]
     @test all(x -> MOI.is_valid(optimizer, x), x)
