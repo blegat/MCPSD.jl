@@ -31,7 +31,7 @@ const SUPPORTED_GETTABLE_ATTRIBUTES = Union{
     MOI.TerminationStatus,
     MOI.PrimalStatus,
     MOI.DualStatus,
-    MOI.SolveTime,
+    MOI.SolveTimeSec,
     NumberOfIterations,
     NumberOfCholeskyFactorizations
 }

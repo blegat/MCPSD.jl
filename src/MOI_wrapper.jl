@@ -93,7 +93,7 @@ function MOI.optimize!(optimizer::Optimizer{T}) where T
     J = Int[]
     V = T[]
     for term in optimizer.objective_function.terms
-        i, j = mapping[term.variable_index.value]
+        i, j = mapping[term.variable.value]
         push!(I, i)
         push!(I, j)
         push!(J, j)
@@ -129,7 +129,7 @@ function MOI.empty!(optimizer::Optimizer)
     optimizer.results = nothing
 end
 
-MOI.Utilities.supports_default_copy_to(::Optimizer, names::Bool) = !names
+MOI.supports_incremental_interface(::Optimizer) = true
 
 function MOI.copy_to(dest::Optimizer, src::MOI.ModelLike; kwargs...)
     return MOI.Utilities.automatic_copy_to(dest, src; kwargs...)
@@ -160,7 +160,7 @@ function MOI.get(::Optimizer, ::MOI.ListOfConstraintAttributesSet)
     return MOI.AbstractConstraintAttribute[]
 end
 
-function MOI.get(optimizer::Optimizer, ::MOI.ListOfConstraints)
+function MOI.get(optimizer::Optimizer, ::MOI.ListOfConstraintTypesPresent)
     constraint_types = Tuple{DataType, DataType}[]
     if optimizer.set !== nothing
         push!(constraint_types, (MOI.VectorOfVariables, Elliptope))

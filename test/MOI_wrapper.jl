@@ -7,20 +7,14 @@ const MOIU = MOI.Utilities
 const MOIB = MOI.Bridges
 
 import MCPSD
-const OPTIMIZER_CONSTRUCTOR = MOI.OptimizerWithAttributes(MCPSD.Optimizer, MOI.Silent() => true)
-const OPTIMIZER = MOI.instantiate(OPTIMIZER_CONSTRUCTOR)
 
 @testset "SolverName" begin
-    @test MOI.get(OPTIMIZER, MOI.SolverName()) == "MCPSD"
+    @test MOI.get(MCPSD.Optimizer(), MOI.SolverName()) == "MCPSD"
 end
 
-@testset "supports_default_copy_to" begin
-    @test MOIU.supports_default_copy_to(OPTIMIZER, false)
-    @test !MOIU.supports_default_copy_to(OPTIMIZER, true)
+@testset "supports_incremental_interface" begin
+    @test MOI.supports_incremental_interface(MCPSD.Optimizer())
 end
-
-const BRIDGED = MOI.instantiate(OPTIMIZER_CONSTRUCTOR, with_bridge_type = Float64)
-const CONFIG = MOIT.TestConfig(atol=1e-6, rtol=1e-6)
 
 function moi_test(optimizer, L::Matrix{T}, expected_X, expected_y, expected_obj, tol) where T
     @test MOI.is_empty(optimizer)
