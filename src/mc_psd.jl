@@ -108,7 +108,7 @@ function mc_psd(L::Symmetric{T};
     end            # end of main loop
 
     results = Dict{MOI.AbstractModelAttribute, Any}(
-        MOI.SolveTime() => (current - start) / 1e9,
+        MOI.SolveTimeSec() => (current - start) / 1e9,
         NumberOfIterations() => iter,
         NumberOfCholeskyFactorizations() => cholcnt,
     )
