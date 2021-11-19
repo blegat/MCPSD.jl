@@ -22,8 +22,8 @@ function direct_test(L::Matrix{T}, expected_X, expected_y, expected_obj, tol) wh
         @test y isa Vector{T}
         @test y ≈ expected_y atol=tol rtol=tol
         @test results[MCPSD.NumberOfIterations()] == 19
-        @test results[MOI.SolveTime()] isa Float64
-        @show results[MOI.SolveTime()]
+        @test results[MOI.SolveTimeSec()] isa Float64
+        @show results[MOI.SolveTimeSec()]
     end
 end
 

@@ -63,8 +63,8 @@ function moi_test(optimizer, L::Matrix{T}, expected_X, expected_y, expected_obj,
     @test MOI.get(optimizer, MOI.ConstraintPrimal(), cx) ≈ expected_x atol=tol rtol=tol
     @test MOI.get(optimizer, MOI.ConstraintDual(), cx) ≈ expected_y atol=tol rtol=tol
     @test MOI.get(optimizer, MCPSD.NumberOfIterations()) == 19
-    @test MOI.get(optimizer, MOI.SolveTime()) isa Float64
-    @show MOI.get(optimizer, MOI.SolveTime())
+    @test MOI.get(optimizer, MOI.SolveTimeSec()) isa Float64
+    @show MOI.get(optimizer, MOI.SolveTimeSec())
 end
 
 @testset "[MOI_wrapper] Wikipedia example with $T" for T in [Float64, BigFloat]
