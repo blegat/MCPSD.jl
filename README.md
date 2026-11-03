@@ -13,7 +13,7 @@ SIAM Journal on Optimization 6, no. 2 (1996): 342-361.
 
 The solver can be used with JuMP as follows:
 ```julia
-using PCPSD, JuMP
+using MCPSD, JuMP
 model = direct_model(MCPSD.Optimizer())
 x = @variable(model, [1:10] in MCPSD.Elliptope(5))
 @objective(model, Min, x[1] + x[3] + x[6] + x[7] + x[8] + x[10])
